@@ -1,13 +1,10 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-
 from tqdm import tqdm
-#from util.data_loader import LoadData
-from clustering.gaussian_model import GMMFitter
-#from clustering.feature_extractor import TSegmentation
-#from util.utils import write2excel, visualise_clustering_results, plot_gradients
 from sklearn.metrics import silhouette_score, davies_bouldin_score, calinski_harabasz_score
+from sklearn.mixture import GaussianMixture
+from sklearn.model_selection import GridSearchCV
 
 def min_max_transformation_cvi(cvi):
     return (cvi - min(cvi))/(max(cvi) - min(cvi))
@@ -130,8 +127,6 @@ def cvi(model, X, labels=None):
             "calinski_harabasz": calinski_harabasz_score(X=X, labels=labels),
             "bic_score": model.bic(X=X)}
     
-from sklearn.mixture import GaussianMixture
-from sklearn.model_selection import GridSearchCV
 
 def gmm_bic_score(estimator, X):
     """Callable to pass to GridSearchCV that will use the BIC score."""
